@@ -17,7 +17,6 @@ module "my-cluster" {
   }
 
   eks_managed_node_groups = {
-    blue = {}
     green = {
       min_size     = var.autoscaling_group_min_size
       max_size     = var.autoscaling_group_max_size
