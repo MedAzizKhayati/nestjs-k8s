@@ -50,4 +50,4 @@ jobs:
       - name: Deploy to EKS
         run: |
           aws eks update-kubeconfig --name $CLUSTER_NAME
-          kubectl rollout restart -f k8s || kubectl apply -f k8s
+          kubectl rollout restart deployment nestjs-k8s || kubectl apply -f k8s
