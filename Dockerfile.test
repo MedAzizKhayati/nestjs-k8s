@@ -13,4 +13,4 @@ COPY . .
 RUN yarn build
 
 # run yarn test and yarn test:e2e
-CMD ["yarn", "test"]
+CMD ["yarn", "test", "--forceExit"]

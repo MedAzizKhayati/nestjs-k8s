@@ -5,3 +5,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
+    container_name: test
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/test
+    
+  mongo:
+    image: mongo:4.4.21
+    container_name: mongo
+    logging:
+      driver: none
+    ports:
+      - 27017:27017
+  
+
+# docker compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from test --attach test
