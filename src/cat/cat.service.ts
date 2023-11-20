@@ -45,7 +45,7 @@ export class CatService {
   async findRandoms(length: string): Promise<CatDocument[]> {
     const randoms = [];
 
-    for (let i = 0; i < Math.min(parseInt(length), 10); i++) {
+    for (let i = 0; i < Math.min(parseInt(length), 3); i++) {
       randoms.push(await this.findRandom());
     }
 
