@@ -16,27 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-
-      - name: Install the dependencies
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
-
-      - name: Run integration tests
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test # will run `yarn test` command
-
-      - name: Run end-to-end tests
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test:e2e # will run `yarn test` command
-
-      - name: Build
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build # will run `yarn build` command
+      - name: Build test image
+        run: docker build -t test-image -f Dockerfile.test .
+      
+      - name: Run tests
+        run: docker run test-image
+      
+      - name: Build production image
+        run: docker build -t medazizkhayati/nestjs-k8s .
