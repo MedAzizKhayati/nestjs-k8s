@@ -3,6 +3,8 @@ name: Ci/CD Pipeline
 env:
   DOCKER_COMPOSE_FILE: 'docker-compose-test.yml'
   APP_NAME: 'nestjs-k8s'
+  CLUSTER_NAME: 'demo-cluster'
+  REGION: 'eu-central-1'
 
 on:
   push:
@@ -36,3 +38,15 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:latest
+      
+      - name: Authenticate to AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+      
+      - name: Apply k8s
+        run: |
+          aws eks --region $REGION update-kubeconfig --name $CLUSTER_NAME
+          kubectl apply -f k8s
