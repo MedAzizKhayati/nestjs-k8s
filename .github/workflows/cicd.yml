@@ -10,7 +10,7 @@ on:
     branches: ['master']
 
 jobs:
-  build:
+  cicd-pipeline:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,10 +26,15 @@ jobs:
         with:
           cmd: install # will run `yarn install` command
 
-      - name: Run tests
+      - name: Run integration tests
         uses: borales/actions-yarn@v4
         with:
           cmd: test # will run `yarn test` command
+
+      - name: Run end-to-end tests
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: test:e2e # will run `yarn test` command
 
       - name: Build
         uses: borales/actions-yarn@v4
