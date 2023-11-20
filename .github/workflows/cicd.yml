@@ -5,6 +5,7 @@ env:
   APP_NAME: 'nestjs-k8s'
   CLUSTER_NAME: 'demo-cluster'
   REGION: 'eu-central-1'
+  TAG: ${{ github.sha }}
 
 on:
   push:
@@ -37,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:${{ env.TAG }}
       
       - name: Authenticate to AWS
         uses: aws-actions/configure-aws-credentials@v1

@@ -12,6 +12,7 @@ spec:
       labels:
         app: nestjs-k8s
     spec:
+      terminationGracePeriodSeconds: 30
       containers:
         - name: nestjs-k8s
           image: medazizkhayati/nestjs-k8s:latest
