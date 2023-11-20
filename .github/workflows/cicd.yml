@@ -24,5 +24,12 @@ jobs:
       - name: Run tests
         run: docker compose -f $DOCKER_COMPOSE_FILE up --abort-on-container-exit --exit-code-from test --attach test
 
-      - name: Build production image
-        run: docker build -t medazizkhayati/nestjs-k8s .
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: medazizkhayati/nestjs-k8s:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
