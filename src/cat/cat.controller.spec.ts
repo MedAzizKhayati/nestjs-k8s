@@ -35,7 +35,7 @@ describe('CatController', () => {
 
   it('should find a random cat', async () => {
     const cat = await controller.findRandom();
-    expect(cat).toHaveProperty('id');
+    expect(cat).toHaveProperty('_id');
     expect(cat).toHaveProperty('name');
     expect(cat).toHaveProperty('age');
     expect(cat).toHaveProperty('breed');
