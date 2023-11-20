@@ -41,4 +41,14 @@ export class CatService {
     await this.create(createCatDto);
     return (await this.catModel.aggregate([{ $sample: { size: 1 } }])).at(0);
   }
+
+  async findRandoms(length: string): Promise<CatDocument[]> {
+    const randoms = [];
+
+    for (let i = 0; i < Math.min(parseInt(length), 10); i++) {
+      randoms.push(await this.findRandom());
+    }
+
+    return randoms;
+  }
 }

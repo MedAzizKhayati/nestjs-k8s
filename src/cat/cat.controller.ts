@@ -20,10 +20,16 @@ export class CatController {
   async findRandom() {
     return this.catService.findRandom();
   }
+
+  @Get('randoms/:length') 
+  async findRandoms(@Param('length') length: string) {
+    return this.catService.findRandoms(length);
+  }
   
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.catService.findOne(id);
   }
+
 
 }
