@@ -20,4 +20,9 @@ export class CatController {
   async findOne(@Param('id') id: string) {
     return this.catService.findOne(id);
   }
+
+  @Get('random')
+  async findRandom() {
+    return this.catService.findRandom();
+  }
 }

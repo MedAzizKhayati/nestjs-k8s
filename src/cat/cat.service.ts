@@ -20,4 +20,25 @@ export class CatService {
   async findOne(id: string): Promise<CatDocument> {
     return this.catModel.findById(id);
   }
+
+  private getRandomString(minLength: number, maxLength: number) {
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    const length =
+      Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result.charAt(0).toUpperCase() + result.slice(1);
+  }
+
+  async findRandom(): Promise<CatDocument> {
+    const createCatDto = new CreateCatDto();
+    createCatDto.name = this.getRandomString(3, 10);
+    createCatDto.age = Math.floor(Math.random() * 20);
+    createCatDto.breed = this.getRandomString(3, 10);
+    await this.create(createCatDto);
+    return (await this.catModel.aggregate([{ $sample: { size: 1 } }])).at(0);
+  }
 }

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-k8s
+spec:
+  selector:
+    matchLabels:
+      app: nestjs-k8s
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nestjs-k8s
+    spec:
+      containers:
+        - name: nestjs-k8s
+          image: medazizkhayati/nestjs-k8s:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongodb-service:27017/nestjs-k8s" # Replace with your MongoDB connection URI
+          readinessProbe:
+            httpGet:
+              path: /  # Adjust this path to your NestJS health check endpoint
+              port: 3000
+            initialDelaySeconds: 15  # Wait for 15 seconds before starting the probe
+            periodSeconds: 5  # Probe the endpoint every 5 seconds
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nestjs-k8s
+spec:
+  selector:
+    app: nestjs-k8s
+  ports:
+    - protocol: TCP
+      targetPort: 3000
+      port: 5000
+      nodePort: 30000
+  type: LoadBalancer
