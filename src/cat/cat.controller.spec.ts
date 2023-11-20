@@ -32,4 +32,13 @@ describe('CatController', () => {
     expect(createdCat).toHaveProperty('id');
     expect((await controller.findOne(createdCat.id)).id).toEqual(createdCat.id);
   });
+
+  it('should find a random cat', async () => {
+    const cat = await controller.findRandom();
+    expect(cat).toHaveProperty('id');
+    expect(cat).toHaveProperty('name');
+    expect(cat).toHaveProperty('age');
+    expect(cat).toHaveProperty('breed');
+  });
+  
 });

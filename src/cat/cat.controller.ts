@@ -16,13 +16,14 @@ export class CatController {
     return this.catService.findAll();
   }
 
+  @Get('random')
+  async findRandom() {
+    return this.catService.findRandom();
+  }
+  
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.catService.findOne(id);
   }
 
-  @Get('random')
-  async findRandom() {
-    return this.catService.findRandom();
-  }
 }
