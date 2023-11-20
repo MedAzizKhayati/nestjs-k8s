@@ -7,6 +7,6 @@ export class AppService {
   }
 
   getHelloById(id: string): string {
-    return `Hello World! ${id}`;
+    return `Hello ${id}!`;
   }
 }
