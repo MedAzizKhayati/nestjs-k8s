@@ -50,4 +50,4 @@ jobs:
       - name: Deploy to EKS
         run: |
           kubectl patch deployment nestjs-k8s -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"build\":\"$CI_COMMIT_SHORT_SHA\"}}}}}}"
-          kubectl rollout restart -f k8s
+          kubectl apply -f k8s
